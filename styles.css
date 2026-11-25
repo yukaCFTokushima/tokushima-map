@@ -229,6 +229,19 @@ figcaption { margin-top: 8px; }
 .breakfast small { display: block; margin-top: 6px; font-size: .74rem; }
 .breakfast .tag { margin: 0 0 4px; align-self: flex-start; }
 #city-weekend .breakfast article h3 + p { font-weight: 700; color: var(--blue-ink); }
+#omiyage .breakfast article { background: var(--soft); border-color: transparent; }
+#omiyage .tag { --tint: var(--cyan-tint); --category: var(--cyan-ink); }
+#omiyage .breakfast small { margin-top: auto; padding-top: 10px; }
+#omiyage .breakfast { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#omiyage .breakfast article { position: relative; }
+.omiyage-icon {
+  display: grid; place-items: center;
+  width: 76px; height: 76px; border-radius: 50%; margin-bottom: 10px;
+  transition: transform .25s ease;
+}
+.omiyage-icon svg { width: 52px; height: 52px; }
+#omiyage .breakfast article:hover .omiyage-icon { transform: rotate(-8deg) scale(1.06); }
+#omiyage .tag { position: absolute; top: 18px; right: 18px; }
 #city-weekend .breakfast { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 480px) { #city-weekend .breakfast { grid-template-columns: 1fr; } }
 .price { font-size: 2rem; color: var(--blue-ink); }
@@ -258,6 +271,17 @@ figcaption { margin-top: 8px; }
 .weekend-days li::marker { color: var(--purple); }
 
 footer { padding: 28px 0 40px; border-top: 1.5px solid var(--line); line-height: 1.9; }
+.see-you {
+  margin: 8px 0 28px; padding: clamp(28px, 4vw, 44px);
+  border-radius: 36px; color: var(--ink); font-size: 1rem;
+  background: linear-gradient(135deg, var(--blue-tint), var(--cyan-tint) 55%, var(--purple-tint));
+}
+.see-you p { margin: 0; }
+.see-you-big {
+  font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.3; margin-bottom: 10px !important;
+  background: linear-gradient(100deg, var(--blue), var(--purple));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 
 @media (max-width: 760px) {
   .hero { grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
