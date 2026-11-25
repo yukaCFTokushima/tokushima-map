@@ -6,12 +6,17 @@
 <body>
 <header class="hero">
   <div class="hero-inner">
+    <div class="hero-copy">
     <p class="date"><time datetime="2026-11-27">2026年11月27日</time>–<time datetime="2026-11-28">28日</time></p>
     <h1>徳島おもてなしマップ</h1>
     <p class="subtitle">水の都と阿波おどり</p>
     <nav aria-label="ガイドの目次">
-      <a href="#guide">地図</a><a href="#schedule">日程</a><a href="#dinner">夜グルメ</a><a href="#morning">朝ごはん</a>
+      <a class="hero-primary" href="#guide">地図を開く <span aria-hidden="true">↓</span></a><a href="#schedule">日程</a><a href="#dinner">夜グルメ</a><a href="#morning">朝ごはん</a>
     </nav>
+    </div>
+    <figure class="hero-art">
+      <img src="images/cruise-night.svg" width="480" height="300" alt="月明かりの下、新町川を進むクルーズ船のイラスト">
+    </figure>
   </div>
 </header>
 <main><section id="guide" aria-labelledby="guide-title">
@@ -32,7 +37,7 @@ const data=[
 {"id": "todai", "name": "ラーメン東大 大道本店", "type": "dinner", "tag": "11:00〜翌4:00", "desc": "濃厚豚骨醤油と生卵。", "q": "徳島市大道1-36 ラーメン東大", "xy": null, "img": "images/ramen.svg", "web": "https://tabelog.com/tokushima/A3601/A360101/36000013/"},
 {"id": "awaya", "name": "阿波屋", "type": "dinner", "tag": "金曜19:00〜翌3:00", "desc": "両国橋の人気店。すだちで味変。", "q": "徳島市両国橋34 阿波屋", "xy": null, "img": "images/ramen.svg", "web": "https://tabelog.com/tokushima/A3601/A360101/36000179/"}];
 let fav=[];try{fav=JSON.parse(localStorage.getItem('tokushima-fav')||'[]')}catch(e){}let filter='all';let map,layer,markers={};const url=d=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.q);if(window.L){map=L.map('map').setView([34.072,134.549],15);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',maxZoom:19}).addTo(map);layer=L.layerGroup().addTo(map)}else{document.querySelector('#map').textContent='地図を読み込めません。各スポットのGoogleマップをご利用ください。'}
-function render(){const visible=data.filter(d=>filter==='all'||(filter==='fav'?fav.includes(d.id):d.type===filter));if(layer){layer.clearLayers();markers={};for(const d of visible){if(!d.xy)continue;const m=L.marker(d.xy,{icon:L.divIcon({className:'',html:`<span class="pin ${d.type}">${data.indexOf(d)+1}</span>`,iconSize:[30,30],iconAnchor:[15,15]})}).bindPopup(`<b>${d.name}</b><br>${d.desc}<br><a target="_blank" rel="noopener" href="${url(d)}">Googleマップ</a>`).addTo(layer);markers[d.id]=m;}}document.querySelector('#spots').innerHTML=visible.map(d=>`<article class="spot">${d.img?`<img src="${d.img}" alt="${d.name}のイメージイラスト" loading="lazy">`:`<div class="tag">${data.indexOf(d)+1} / 交通</div>`}<div><span class="tag">${d.tag}</span><h3><button class="name" onclick="focusSpot('${d.id}')">${d.name}</button></h3><p>${d.desc}</p><a href="${url(d)}" target="_blank" rel="noopener">経路案内</a> <a class="web" href="${d.web||({cruise:'https://npo-shinmachiriver.jp/cruise/',dance:'https://www.awaodori-kaikan.jp/',door:'https://aosi.jp/door/',yama:'https://yumekubo.com/store/tokushima-ekimae/'})[d.id]||url(d)}" target="_blank" rel="noopener">${d.web?'食べログ':'Web'}</a> <button onclick="toggleFav('${d.id}')" aria-label="${d.name}のお気に入り" aria-pressed="${fav.includes(d.id)}">${fav.includes(d.id)?'★':'☆'}</button></div></article>`).join('')||'お気に入りはまだありません。'}
+function render(){const visible=data.filter(d=>filter==='all'||(filter==='fav'?fav.includes(d.id):d.type===filter));if(layer){layer.clearLayers();markers={};for(const d of visible){if(!d.xy)continue;const m=L.marker(d.xy,{icon:L.divIcon({className:'',html:`<span class="pin ${d.type}"></span>`,iconSize:[30,30],iconAnchor:[15,15]})}).bindPopup(`<b>${d.name}</b><br>${d.desc}<br><a target="_blank" rel="noopener" href="${url(d)}">Googleマップ</a>`).addTo(layer);markers[d.id]=m;}}document.querySelector('#spots').innerHTML=visible.map(d=>`<article class="spot spot-${d.type}">${d.img?`<img src="${d.img}" alt="${d.name}のイメージイラスト" loading="lazy">`:`<div class="tag">${data.indexOf(d)+1} / 交通</div>`}<div><span class="tag">${d.tag}</span><h3><button class="name" onclick="focusSpot('${d.id}')">${d.name}</button></h3><p>${d.desc}</p><a href="${url(d)}" target="_blank" rel="noopener">経路案内</a> <a class="web" href="${d.web||({cruise:'https://npo-shinmachiriver.jp/cruise/',dance:'https://www.awaodori-kaikan.jp/',door:'https://aosi.jp/door/',yama:'https://yumekubo.com/store/tokushima-ekimae/'})[d.id]||url(d)}" target="_blank" rel="noopener">${d.web?'食べログ':'Web'}</a> <button onclick="toggleFav('${d.id}')" aria-label="${d.name}のお気に入り" aria-pressed="${fav.includes(d.id)}">${fav.includes(d.id)?'★':'☆'}</button></div></article>`).join('')||'お気に入りはまだありません。'}
 function focusSpot(id){let d=data.find(x=>x.id===id);if(markers[id]){map.setView(d.xy,17);markers[id].openPopup();document.querySelector('#map').scrollIntoView({behavior:'smooth',block:'nearest'})}else window.open(url(d),'_blank','noopener')}
 function toggleFav(id){fav=fav.includes(id)?fav.filter(x=>x!==id):[...fav,id];try{localStorage.setItem('tokushima-fav',JSON.stringify(fav))}catch(e){}render()}
 const filterButtons=document.querySelectorAll('#filters button');
