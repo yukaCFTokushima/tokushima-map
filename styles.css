@@ -154,3 +154,14 @@ footer { padding-bottom: 28px; }
   .photos, .breakfast { grid-template-columns: 1fr; }
   dl { gap: 8px; font-size: .9rem; }
 }
+
+.restaurant-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin-top: 12px;
+  font-size: .85rem;
+}
+.restaurant-links a { padding-block: 6px; }
+.restaurant-source { font-weight: 700; }
