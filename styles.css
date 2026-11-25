@@ -165,3 +165,25 @@ footer { padding-bottom: 28px; }
 }
 .restaurant-links a { padding-block: 6px; }
 .restaurant-source { font-weight: 700; }
+
+.weekend-jump {
+  display: block;
+  width: fit-content;
+  margin-top: 12px;
+  font-size: .9rem;
+}
+.weekend-days {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 32px;
+}
+.weekend-days h3 {
+  margin: 0;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.weekend-days ul { margin-block: 8px 0; padding-inline-start: 1.3em; }
+.weekend-days li { margin-block: 6px; }
+@media (max-width: 600px) {
+  .weekend-days { grid-template-columns: 1fr; }
+}
