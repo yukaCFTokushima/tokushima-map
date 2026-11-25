@@ -301,3 +301,16 @@ footer { padding: 28px 0 40px; border-top: 1.5px solid var(--line); line-height:
   .photos, .breakfast { grid-template-columns: 1fr; }
   dt, dd { padding: 10px 14px; font-size: .9rem; }
 }
+
+.map-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.map-resources .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+}
